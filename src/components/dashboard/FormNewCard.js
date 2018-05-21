@@ -1,6 +1,9 @@
 import React,{Component} from 'react';
-
+import Api from '../services/Api';
 class Form extends Component{
+
+
+
     render(){
         return(
            <form onSubmit={this.props.getWeather}>

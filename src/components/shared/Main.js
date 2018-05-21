@@ -8,7 +8,7 @@ class Main extends Component{
         return(
             <div>
                 <CardDisplay/>
-                <FormNewCard />
+                
             </div>
         );
     }
