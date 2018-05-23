@@ -4,13 +4,13 @@ import CardInfo from './CardInfo';
 class CardDisplay extends Component {
     render() {
         return (
-            <container>              
-                <CardInfo 
+            
+            <div>  
                 
-                
-                />
-            </container>
+            </div>
+            
         );
+       
     }
 }
 
