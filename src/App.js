@@ -13,80 +13,92 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      temperature: '',
-      city: '',
-      country: '',
-      humidity: '',
-      description: '',
-      icon:'',
-      error: ''
+      savedCities:[
+        
+      ],
+     isChanging:false
     }
-    //this.obtainChildrenData=this.obtainChildrenData.bind(this);
+    this.getCitiesLocalStorage=this.getCitiesLocalStorage.bind(this);
+    this.saveCity=this.saveCity.bind(this);
+    this.getWeather=this.getWeather.bind(this);
+    this.eraseCityFromState=this.eraseCityFromState.bind(this);
+
+  }
+
+  getCitiesLocalStorage(){
+    const citiesInStorage = localStorage.getItem('savedCities');
+    const citiesInStorageJSON=JSON.parse(citiesInStorage);
+    if(citiesInStorage!==null){
+      this.setState({savedCities:citiesInStorageJSON});
+    }
+   console.log(citiesInStorage,'this asjhkdhas')  
+  }
+
+  componentDidMount(){
+    this.getCitiesLocalStorage();
   }
   
-  getWeather = async (e) => {
-    e.preventDefault();
-    const city = e.target.elements.city.value;
-    const country = e.target.elements.country.value;
-    const api_call = await Api.getData(city, country);
-    const data = await api_call.json();
-    console.log(city);
-    console.log(data);
+  saveCity(data){
+let newCities=[];
+    const citiesInStorage = localStorage.getItem('savedCities');
+    const citiesInStorageJSON=JSON.parse(citiesInStorage);
     
-    var savedData={
-      temperature:data.main.temp,
-      city:data.name,
-      country: data.sys.country,
-      humidity: data.main.humidity,
-      description: data.weather[0].description,
-      icon:data.weather[0].icon
-
+    if(citiesInStorage!==null){
+      
+       newCities=citiesInStorageJSON
+       newCities.push(data);
+    }else{
+      newCities.push(data);
     }
-   
+    this.setState({savedCities:newCities});
+    const newCitiesString=JSON.stringify(newCities);
+    localStorage.setItem('savedCities',newCitiesString);
+    
+  }
+getWeather(e){
+  e.preventDefault();
+  const city = e.target.elements.city.value;
+   const country = e.target.elements.country.value;
+   const data={city:city,country:country};
+   this.saveCity(data);
+}
 
-    localStorage.setItem("stored",JSON.stringify(savedData));
-    console.log(localStorage.getItem("stored"));
-    var savedData=JSON.parse(localStorage.getItem("stored"));
+eraseCityFromState(city,country){
+  this.setState({ isChanging:true})
+    const citiesInStorage = localStorage.getItem('savedCities');
+    const citiesInStorageJSON=JSON.parse(citiesInStorage);
+    const cityToDelete= {city:city,country:country};
+const newArray = citiesInStorageJSON.filter((city,i) =>{ 
+console.log(cityToDelete,city);
 
-    console.log(savedData);
-    weatherArray.push(savedData);
-    //array with all the objects
+  return city.city!=cityToDelete.city;
+});
+console.log(newArray,'leeeel');
 
-console.log(weatherArray);
-if(!localStorage.getItem('stored')){
-  populateStorage();
-}else{
-  setStorage();
+this.setState({savedCities:newArray,isChanging:false});
+
+
 }
 
 
 
-    this.setState({
-      temperature: data.main.temp,
-      city: data.name,
-      country: data.sys.country,
-      humidity: data.main.humidity,
-      description: data.weather[0].description,
-      icon:data.weather[0].icon,
-      error: ''
-    })
-
-  }
-
-
   render() {
     return (
-      <div className="App">
+      <div className="App" >
         <Header />
         <FormNewCard getWeather={this.getWeather} />
         
-        <CardInfo temperature={this.state.temperature}
+        {(!this.state.isChanging)?(<CardInfo 
+        savedCities={this.state.savedCities}
+        temperature={this.state.temperature}
           city={this.state.city}
           country={this.state.country}
           humidity={this.state.humidity}
           description={this.state.description}
           icon={this.state.icon}
-          error={this.state.error} />
+          error={this.state.error}
+          eraseCityFromState={this.eraseCityFromState} />):'leel'}
+        
           
           
         

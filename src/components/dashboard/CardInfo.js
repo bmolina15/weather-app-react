@@ -2,69 +2,42 @@ import React, { Component } from 'react';
 import FormNewCard from './FormNewCard';
 import Api from '../services/Api';
 import "./CardInfo.css";
+import Card from './Card';
 class CardInfo extends Component {
+    constructor(props){
+        super(props);
+        this.state={}
 
-    
+this.eraseCityFromApp=this.eraseCityFromApp.bind(this);
+    }
 
-    populateStorage = async (e) => {
-        
-    
-      }
 
+    eraseCityFromApp(city,country){
+this.props.eraseCityFromState(city,country);
+
+    }
     render() {
         return (
             <div className="flex-container">
-                {this.props.city&&
-                <div className="card">
-                    {this.props.city && this.props.country && <p>Location {this.props.city}, {this.props.country}</p>}
-                    {this.props.temperature && <p>Temperature {this.props.temperature}</p>}
-                    {this.props.humidity && <p> Humidity  {this.props.humidity}</p>}
-                    {this.props.description && <p> Description {this.props.description} </p>}
-
-                    {this.props.icon&& <img src={`http://openweathermap.org/img/w/${this.props.icon}.png`} alt="weathericon" />}
-
-                </div>
-                }
-                {this.props.city&&
-                <div className="card">
-                    {this.props.city && this.props.country && <p>Location {this.props.city}, {this.props.country}</p>}
-                    {this.props.temperature && <p>Temperature {this.props.temperature}</p>}
-                    {this.props.humidity && <p> Humidity  {this.props.humidity}</p>}
-                    {this.props.description && <p> Description {this.props.description} </p>}
-
-                    {this.props.icon&& <img src={`http://openweathermap.org/img/w/${this.props.icon}.png`} alt="weathericon" />}
-
-                </div>
-                }
-                {this.props.city&&
-                <div className="card">
-                    {this.props.city && this.props.country && <p>Location {this.props.city}, {this.props.country}</p>}
-                    {this.props.temperature && <p>Temperature {this.props.temperature}</p>}
-                    {this.props.humidity && <p> Humidity  {this.props.humidity}</p>}
-                    {this.props.description && <p> Description {this.props.description} </p>}
-
-                    {this.props.icon&& <img src={`http://openweathermap.org/img/w/${this.props.icon}.png`} alt="weathericon" />}
-
-                </div>
-                }
-                {this.props.city&&
-                <div className="card">
-                    {this.props.city && this.props.country && <p>Location {this.props.city}, {this.props.country}</p>}
-                    {this.props.temperature && <p>Temperature {this.props.temperature}</p>}
-                    {this.props.humidity && <p> Humidity  {this.props.humidity}</p>}
-                    {this.props.description && <p> Description {this.props.description} </p>}
-
-                    {this.props.icon&& <img src={`http://openweathermap.org/img/w/${this.props.icon}.png`} alt="weathericon" />}
-
-                </div>
-                }
-
                 
+                {
+                    (this.props.savedCities.length > 0) ? (
+                        this.props.savedCities.map((savedCity,i) => {
+                            return (
+                                <Card key={i} city={savedCity.city} country={savedCity.country} id={i} 
+                                eraseCityFromApp={this.eraseCityFromApp}/>
+
+                            )
+                        })
+                    ) : ''
+
+                }
 
 
-                </div>
-                
-            
+
+            </div>
+
+
 
         );
     }
