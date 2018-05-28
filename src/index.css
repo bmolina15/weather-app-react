@@ -2,5 +2,10 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background-image: './components/dashboard/10471.png';
+  background-color: lightblue;
+ 
+}
+
+
+body > div:nth-child(4) > div > div{
 }
