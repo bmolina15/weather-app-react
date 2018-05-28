@@ -9,7 +9,7 @@ class Header extends Component{
 
     render(){
         return(
-                <header>  WEATHER APPLICATION   </header>
+                <header>  WEATHER    </header>
                
         );
     }

@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 import CardInfo from './CardInfo';
+import Card from './Card';
+import './CardDisplay.css';
 
 class CardDisplay extends Component {
-
-
-   
-
-
     render() {
         return (
-            
-            <div onLoad={this.checkStorage}  >
-                
+
+            <div className="dash" >
+
             </div>
-            
+
         );
-       
+
     }
 }
 
