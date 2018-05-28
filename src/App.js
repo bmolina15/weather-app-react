@@ -1,19 +1,41 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Header from './components/shared/Header';
+import FormNewCard from './components/dashboard/FormNewCard';
+import CardsDisplay from './components/dashboard/CardsDisplay';
+
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      savedCities: [
+      ],
+      isChanging: false
+    }
+
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <div className="App" >
+        <Header />
+        <FormNewCard getWeather={this.props.getWeather} />
+        <br />
+        {(!this.props.isChanging) ? (<CardsDisplay
+          savedCities={this.state.savedCities}
+          temperature={this.state.temperature}
+          maxtemp={this.state.maxtemp}
+          mintemp={this.state.mintemp}
+          city={this.state.city}
+          country={this.state.country}
+          humidity={this.state.humidity}
+          description={this.state.description}
+          icon={this.state.icon}
+          error={this.state.error}
+          eraseCityFromState={this.eraseCityFromState} />) : ''}
+
+       </div>
     );
   }
 }
